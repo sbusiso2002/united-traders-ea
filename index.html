@@ -6,10 +6,9 @@
 </button>
 
 <script>
-async function buyEA() {
-  const res = await fetch("https://united-traders-api.onrender.com/create-checkout-session", {
-    method: "POST"
-  });
+function buyEA() {
+  window.location.href = "YOUR_RENDER_URL/create-checkout-session";
+}
 
   const data = await res.json();
   window.location.href = data.url;
