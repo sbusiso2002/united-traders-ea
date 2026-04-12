@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>United Traders EA</title>
+  <title>United Traders EA</<button onclick="buyEA()" style="padding:15px 25px;font-size:18px;background:#2563eb;color:white;border:none;border-radius:8px;">
+  Buy EA - $29
+</button>
+
+<script>
+async function buyEA() {
+  const res = await fetch("https://united-traders-api.onrender.com/create-checkout-session", {
+    method: "POST"
+  });
+
+  const data = await res.json();
+  window.location.href = data.url;
+}
+</script>>
+ 
 </head>
 <body style="background:#0A0F1F;color:white;text-align:center;font-family:sans-serif;">
   <h1>United Traders EA</h1>
