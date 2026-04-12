@@ -6,5 +6,19 @@
 <body style="background:#0A0F1F;color:white;text-align:center;font-family:sans-serif;">
   <h1>United Traders EA</h1>
   <p>Automated Trading System for MT5</p>
+  <button onclick="buyEA()" style="padding:15px 25px;font-size:18px;">
+  Buy EA - $29
+</button>
+
+<script>
+async function buyEA() {
+  const res = await fetch("https://united-traders-api.onrender.com/create-checkout-session", {
+    method: "POST"
+  });
+
+  const data = await res.json();
+  window.location.href = data.url;
+}
+</script>
 </body>
 </html>
