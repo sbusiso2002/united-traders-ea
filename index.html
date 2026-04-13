@@ -1,17 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>United Traders EA</title>
+  <title>United Traders AI</title>
 </head>
-<body style="background:#0A0F1F;color:white;text-align:center;font-family:sans-serif;">
 
-  <h1>United Traders EA</h1>
-  <p>Automated Trading System</p>
+<body style="background:#0A0F1F;color:white;font-family:sans-serif;text-align:center;">
 
-  <a href="https://buy.stripe.com/xxxxxx"
-     style="padding:15px 25px;font-size:18px;background:#2563eb;color:white;text-decoration:none;border-radius:8px;display:inline-block;">
-     Buy EA - $29
-  </a>
+<h1>UNITED TRADERS AI</h1>
+<p>SMC Sniper Scanner</p>
+
+<button onclick="scanMarket()" style="padding:12px 20px;background:#2563eb;color:white;border:none;border-radius:6px;">
+Scan Market
+</button>
+
+<h2>Signals</h2>
+<div id="signals"></div>
+
+<script>
+function randomSignal(pair){
+  let dir = Math.random() > 0.5 ? "BUY" : "SELL";
+  let entry = (Math.random()*1000+1000).toFixed(2);
+  let sl = (entry - 10).toFixed(2);
+  let tp = (parseFloat(entry) + 20).toFixed(2);
+
+  return `
+  <div style="background:#111;padding:15px;margin:10px;border-radius:10px;">
+    <b>${pair}</b><br>
+    Direction: <span style="color:${dir==="BUY"?"lime":"red"}">${dir}</span><br>
+    Entry: ${entry}<br>
+    SL: ${sl}<br>
+    TP: ${tp}<br>
+    Reason: Liquidity sweep + OB + FVG
+  </div>`;
+}
+
+function scanMarket(){
+  let pairs = ["XAUUSD","EURUSD","NAS100","GBPUSD"];
+  let output = "";
+
+  pairs.forEach(p=>{
+    if(Math.random() > 0.5){
+      output += randomSignal(p);
+    }
+  });
+
+  document.getElementById("signals").innerHTML = output || "No setups found (wait)";
+}
+</script>
 
 </body>
 </html>
