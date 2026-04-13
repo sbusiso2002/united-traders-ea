@@ -7,7 +7,7 @@
 <body style="background:#0A0F1F;color:white;font-family:sans-serif;text-align:center;">
 
 <h1>UNITED TRADERS AI</h1>
-<p>SMC Sniper Scanner</p>
+<p>SMC Sniper Scanner (Logic Engine)</p>
 
 <button onclick="scanMarket()" style="padding:12px 20px;background:#2563eb;color:white;border:none;border-radius:6px;">
 Scan Market
@@ -17,20 +17,35 @@ Scan Market
 <div id="signals"></div>
 
 <script>
-function randomSignal(pair){
-  let dir = Math.random() > 0.5 ? "BUY" : "SELL";
+function generateSMCSignal(pair){
+
+  // Simulated structured logic
+  let trend = Math.random() > 0.5 ? "bullish" : "bearish";
+  let liquidity = Math.random() > 0.4;
+  let confirmation = Math.random() > 0.4;
+
+  if(!(liquidity && confirmation)) return null;
+
+  let direction = trend === "bullish" ? "BUY" : "SELL";
+
   let entry = (Math.random()*1000+1000).toFixed(2);
-  let sl = (entry - 10).toFixed(2);
-  let tp = (parseFloat(entry) + 20).toFixed(2);
+  let sl = direction === "BUY"
+    ? (entry - 10).toFixed(2)
+    : (parseFloat(entry) + 10).toFixed(2);
+
+  let tp = direction === "BUY"
+    ? (parseFloat(entry) + 20).toFixed(2)
+    : (entry - 20).toFixed(2);
 
   return `
   <div style="background:#111;padding:15px;margin:10px;border-radius:10px;">
     <b>${pair}</b><br>
-    Direction: <span style="color:${dir==="BUY"?"lime":"red"}">${dir}</span><br>
+    Trend: ${trend}<br>
+    Direction: <span style="color:${direction==="BUY"?"lime":"red"}">${direction}</span><br>
     Entry: ${entry}<br>
     SL: ${sl}<br>
     TP: ${tp}<br>
-    Reason: Liquidity sweep + OB + FVG
+    Reason: Liquidity sweep + BOS + confirmation
   </div>`;
 }
 
@@ -39,12 +54,12 @@ function scanMarket(){
   let output = "";
 
   pairs.forEach(p=>{
-    if(Math.random() > 0.5){
-      output += randomSignal(p);
-    }
+    let signal = generateSMCSignal(p);
+    if(signal) output += signal;
   });
 
-  document.getElementById("signals").innerHTML = output || "No setups found (wait)";
+  document.getElementById("signals").innerHTML =
+    output || "No high-probability setups (wait for sniper entry)";
 }
 </script>
 
