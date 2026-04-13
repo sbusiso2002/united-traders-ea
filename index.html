@@ -18,9 +18,20 @@ Scan Market
 <div id="signals"></div>
 
 <script>
+function notifyUser(message){
+  if (Notification.permission === "granted") {
+    new Notification(message);
+  }
+}
+
+function requestPermission(){
+  if ("Notification" in window) {
+    Notification.requestPermission();
+  }
+}
+
 function generateSMCSignal(pair){
 
-  // Simulated structured logic
   let trend = Math.random() > 0.5 ? "bullish" : "bearish";
   let liquidity = Math.random() > 0.4;
   let confirmation = Math.random() > 0.4;
@@ -38,15 +49,15 @@ function generateSMCSignal(pair){
     ? (parseFloat(entry) + 20).toFixed(2)
     : (entry - 20).toFixed(2);
 
+  notifyUser(pair + " " + direction + " signal!");
+
   return `
   <div style="background:#111;padding:15px;margin:10px;border-radius:10px;">
     <b>${pair}</b><br>
-    Trend: ${trend}<br>
-    Direction: <span style="color:${direction==="BUY"?"lime":"red"}">${direction}</span><br>
+    Direction: ${direction}<br>
     Entry: ${entry}<br>
     SL: ${sl}<br>
-    TP: ${tp}<br>
-    Reason: Liquidity sweep + BOS + confirmation
+    TP: ${tp}
   </div>`;
 }
 
@@ -60,9 +71,10 @@ function scanMarket(){
   });
 
   document.getElementById("signals").innerHTML =
-    output || "No high-probability setups (wait for sniper entry)";
+    output || "No sniper setups yet...";
 }
-</script>
 
-</body>
+// ask permission when app loads
+requestPermission();
+</script>
 </html>
